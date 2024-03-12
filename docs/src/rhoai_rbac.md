@@ -91,14 +91,14 @@ spec:
 ```
 
 > [!IMPORTANT]
-> If you want to specify a list of groups, they need to be comma seperated:
+> If you want to specify a list of groups, they need to be comma separated:
 > ```
 > spec:
 >  groupsConfig:
 >    allowedGroups: "system:authenticated,rhods-users"
 > ```
 
-You can follow the same process for editing the `adminGroups` instead of the `allowedGroups`. This group specifies which group of users will have admin access to the OpenShift AI Deashboard
+You can follow the same process for editing the `adminGroups` instead of the `allowedGroups`. This group specifies which group of users will have admin access to the OpenShift AI Dashboard
 
 #### CLI - Controlling Data Science Project Access
 
@@ -107,4 +107,3 @@ The process of granting access to a Data Science Project is the same as a regula
 ```
 oc adm policy add-role-to-group <role> <group name> -n <data science project name>
 ```
-
