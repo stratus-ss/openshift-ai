@@ -90,6 +90,8 @@ spec:
     allowedGroups: "system:authenticated"
 ```
 
+You can then apply the changes by using `oc apply -f <myfile>.yaml`
+
 > [!IMPORTANT]
 > If you want to specify a list of groups, they need to be comma separated:
 > ```
@@ -97,6 +99,11 @@ spec:
 >  groupsConfig:
 >    allowedGroups: "system:authenticated,rhods-users"
 > ```
+
+Alternatively you can use a command similar to the following to patch in your changes:
+```
+oc patch odhdashboardconfig/odh-dashboard-config -p '{"spec":{"groupsConfig": {"allowedGroups":"rhods-users"}}}' --type merge
+```
 
 You can follow the same process for editing the `adminGroups` instead of the `allowedGroups`. This group specifies which group of users will have admin access to the OpenShift AI Dashboard
 
