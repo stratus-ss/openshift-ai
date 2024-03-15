@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    openshift.io/description: "data-science-project for <PROJECT>"
+    openshift.io/display-name: "<PROJECT>"
+  labels:
+    kubernetes.io/metadata.name: <PROJECT>
+    modelmesh-enabled: "true"
+    opendatahub.io/dashboard: "true"
+  name: <PROJECT>

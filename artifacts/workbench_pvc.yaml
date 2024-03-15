@@ -1,0 +1,19 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  annotations:
+    openshift.io/description: "Storage for <WORKBENCH_NAME>" 
+    openshift.io/display-name: <WORKBENCH_NAME>
+  name: <WORKBENCH_NAME>
+  namespace: <PROJECT>
+  finalizers:
+    - kubernetes.io/pvc-protection
+  labels:
+    opendatahub.io/dashboard: 'true'
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  volumeMode: Filesystem

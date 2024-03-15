@@ -38,20 +38,20 @@ The required YAML is found below. These will have to be adjusted to suite your e
 
 #### The Data Science Project
 
-The following YAML is fairly straight forward. Ensure that you replace `<CHANGE_ME>` with appropriate values
+The following YAML is fairly straight forward. Ensure that you replace the placeholds with appropriate values
 
 ```
 apiVersion: v1
 kind: Namespace
 metadata:
   annotations:
-    openshift.io/description: "data-science-project for <CHANGE_ME>"
-    openshift.io/display-name: "<CHANGE_ME>"
+    openshift.io/description: "data-science-project for <PROJECT>"
+    openshift.io/display-name: "<PROJECT>"
   labels:
-    kubernetes.io/metadata.name: <CHANGE_ME>
+    kubernetes.io/metadata.name: <PROJECT>
     modelmesh-enabled: "true"
     opendatahub.io/dashboard: "true"
-  name: <CHANGE_ME>
+  name: <PROJECT>
 ```
 
 After creating this file, simply run `oc apply -f workbench_namespace.yaml`
@@ -66,10 +66,10 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   annotations:
-    openshift.io/description: "Storage for <CHANGE_ME>" 
-    openshift.io/display-name: <CHANGE_ME>
-  name: <CHANGE_ME>
-  namespace: <CHANGE_ME>
+    openshift.io/description: "Storage for <WORKBENCH_NAME>" 
+    openshift.io/display-name: <WORKBENCH_NAME>
+  name: <WORKBENCH_NAME>
+  namespace: <PROJECT>
   finalizers:
     - kubernetes.io/pvc-protection
   labels:
@@ -81,6 +81,7 @@ spec:
     requests:
       storage: 20Gi
   volumeMode: Filesystem
+
 ```
 
 Again use `oc apply -f workbench_pvc.yaml` to create the storage for the workbench.
@@ -93,20 +94,20 @@ Assuming you are using S3 compatible storage, the following secret will enable y
 kind: Secret
 apiVersion: v1
 metadata:
-  name: <CHANGE_ME>
-  namespace: <CHANGE_ME>
+  name: <DATACONNECTION_NAME>
+  namespace: <PROJECT>
   labels:
     opendatahub.io/dashboard: 'true'
     opendatahub.io/managed: 'true'
   annotations:
     opendatahub.io/connection-type: s3
-    openshift.io/display-name: <CHANGE_ME>
+    openshift.io/display-name: <DATACONNECTION_NAME>
 stringData:
-  AWS_ACCESS_KEY_ID: <CHANGE_ME>
-  AWS_DEFAULT_REGION: <CHANGE_ME>
-  AWS_S3_BUCKET: <CHANGE_ME>
-  AWS_S3_ENDPOINT: <CHANGE_ME>
-  AWS_SECRET_ACCESS_KEY: <CHANGE_ME>
+  AWS_ACCESS_KEY_ID: <ACCESS_KEY>
+  AWS_DEFAULT_REGION: <REGION>
+  AWS_S3_BUCKET: <BUCKET_NAME>
+  AWS_S3_ENDPOINT: <HTTP_ENDPOINT>:<PORT>
+  AWS_SECRET_ACCESS_KEY: <SECRET_KEY>
 type: Opaque
 ```
 
@@ -126,16 +127,16 @@ metadata:
   labels:
     opendatahub.io/dashboard: "true"
     opendatahub.io/project-sharing: "true"
-  name: rhods-rb-<CHANGE_ME>
-  namespace: <CHANGE_ME>
+  name: rhods-rb-<WORKBENCH_NAME>
+  namespace: <PROJECT>
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: admin
 subjects:
 - apiGroup: rbac.authorization.k8s.io
-  kind: <CHANGE_ME>
-  name: <CHANGE_ME>
+  kind: <USER/GROUP>
+  name: <GROUP/USERNAME>
 ```
 
 > ![NOTE]
@@ -303,3 +304,5 @@ spec:
           defaultMode: 420
           secretName: <WORKBENCH_NAME>-tls
 ```
+
+If there is a problem with the workbench starting or being created, you can always run `oc describe notebook <notebook name>` and review the status section for clues as to where the problem may lay.

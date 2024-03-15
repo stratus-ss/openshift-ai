@@ -17,13 +17,13 @@ Update the PVC to the desired size, scroll all the way to the bottom and click S
 In the `redhat-ods-applications` project the `odhdashboardconfig` contains some of the default options for the `notebookController`. Specifically:
 
 ```
-notebookController:
-enabled: true
-notebookNamespace: rhods-notebooks
-notebookTolerationSettings:
-enabled: false
-key: NotebooksOnly
-pvcSize: 4Gi
+    notebookController:
+      enabled: true
+      notebookNamespace: rhods-notebooks
+      notebookTolerationSettings:
+        enabled: false
+        key: NotebooksOnly
+      pvcSize: 5Gi
 ```
 
 You can edit this with an `oc patch` command similar to the following
@@ -38,11 +38,11 @@ Alternatively you can create a file with contents similar to this:
 apiVersion: opendatahub.io/v1alpha
 kind: OdhDashboardConfig
 metadata:
-name: odh-dashboard-config
-namespace: redhat-ods-applications
+  name: odh-dashboard-config
+  namespace: redhat-ods-applications
 spec:
-notebookController:
-pvcSize: "5Gi"
+  notebookController:
+    pvcSize: "5Gi"
 ```
 
 and then use `oc apply -f <myfile>.yaml` to apply the changes
