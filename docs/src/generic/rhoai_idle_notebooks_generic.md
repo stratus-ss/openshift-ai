@@ -1,0 +1,2 @@
+## Stopping Idle Notebooks
+You can reduce resource usage in your OpenShift AI deployment by stopping notebook servers that have had no user logged in for some time. By default, idle notebooks are not stopped automatically.
