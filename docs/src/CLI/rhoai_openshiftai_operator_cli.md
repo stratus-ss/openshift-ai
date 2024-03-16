@@ -6,7 +6,7 @@ The OpenShift AI Operator has two objects to create before it is fully operation
 2. The Data Science Cluster
 
 The following can be used to install version 2.7 of the OpenShift AI Operator from the `fast` channel. 
->![NOTE]
+>[!NOTE]
 > For legacy reasons, the OpenShift AI is actually called the `rhods-operator`  (Red Hat OpenShift Data Science)
 
 ```

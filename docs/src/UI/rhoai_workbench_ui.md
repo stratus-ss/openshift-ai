@@ -13,7 +13,7 @@ Click the `Create Workbench` button. The `Name`, `Image Selection` and `Cluster 
 ![create_workbench](../images/ai_create_workbench1.png)
 
 
-> ![IMPORTANT]
+> [!IMPORTANT]
 > You can optionally select `Use a data connection`. If you do, you will be prompted for your Object Storage credentials. This is different from cluster storage. The workbench itself creates a MariaDB container and the cluster storage is mounted into the database container. The `Data Connection` is used for storing pipeline and other objects.
 
 Once the information has been entered click `Create Workbench` and wait for the process to complete.

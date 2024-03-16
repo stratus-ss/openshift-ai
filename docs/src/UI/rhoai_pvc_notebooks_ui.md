@@ -5,6 +5,6 @@ In the OpenShift AI UI you can adjust the PVC settings by navigating to Settings
 
 Update the PVC to the desired size, scroll all the way to the bottom and click Save.
 
-> ![IMPORTANT]
+> [!IMPORTANT]
 > This change causes several pods to restart and may cause disruption to active processes. This should only be done when disruption can be tolerated.
 

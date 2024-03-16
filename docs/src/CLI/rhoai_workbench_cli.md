@@ -32,7 +32,7 @@ After creating this file, simply run `oc apply -f workbench_namespace.yaml`
 
 ### The Persistent Volume Claim
 
->![IMPORTANT]
+>[!IMPORTANT]
 >The following assumes that you have dynamic storage that will create the appropriate persistent volume once a claim is registered. If not you will need to create a corresponding Persistent Volume to provide storage for the Claim
 
 ```
@@ -85,7 +85,7 @@ stringData:
 type: Opaque
 ```
 
->![IMPORTANT]
+>[!IMPORTANT]
 > The endpoint should be an `http` or `https` endpoint and include a port if appropriate. For example `AWS_S3_ENDPOINT: http://192.168.11.11:9000`.
 
 Again use `oc apply -f workbench_dataconnection.yaml` to create the Obejct Storage for the workbench.
@@ -113,7 +113,7 @@ subjects:
   name: <GROUP/USERNAME>
 ```
 
-> ![NOTE]
+> [!NOTE]
 > The above `kind` can be either `User` or `Group`. Chose wisely according to your company's security policy.
 
 ### The Workbench
