@@ -1,7 +1,8 @@
 mkdir -p tmp
 echo "
-- [Installing The OpenShift AI Operator](rhoai_openshiftai_operator_cli.md)
-- [Installing The OpenShift Pipeline Operator](rhoai_openshiftai_operator_cli.md)
+- [Installing The Operators](rhoai_installing_operators.md)
+    - [Installing The OpenShift AI Operator](rhoai_openshiftai_operator_cli.md)
+    - [Installing The OpenShift Pipeline Operator](rhoai_openshiftai_operator_cli.md)
 - [Workbench Basics](rhoai_workbench_generic.md)
     - [Setting Up A Workbench](rhoai_workbench_cli.md)
     - [Rolebindings](rhoai_rbac_generic.md)
@@ -19,7 +20,7 @@ for file in rhoai_idle_notebooks_cli.md  rhoai_openshiftai_operator_cli.md  rhoa
   ln -s ../CLI/"${file}"
 done
 
-for file in rhoai_idle_notebooks_generic.md  rhoai_pipeline_server_generic.md  rhoai_pvc_notebook_generic.md  rhoai_rbac_generic.md  rhoai_workbench_generic.md; do
+for file in rhoai_idle_notebooks_generic.md  rhoai_pipeline_server_generic.md  rhoai_pvc_notebook_generic.md  rhoai_rbac_generic.md  rhoai_workbench_generic.md rhoai_installing_operators.md; do
   ln -s ../generic/"${file}"
 done
 
