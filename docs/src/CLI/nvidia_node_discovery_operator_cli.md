@@ -84,61 +84,24 @@ metadata:
   name: nfd-instance
   namespace: openshift-nfd
 spec:
-  instance: "" # instance is empty by default
-  topologyupdater: false # False by default
+  instance: ''
   operand:
-    image: registry.redhat.io/openshift4/ose-node-feature-discovery:v<OCP VERSION>
-    imagePullPolicy: Always
+    image: >-
+      registry.redhat.io/openshift4/ose-node-feature-discovery:v<OCP VERSION>
+    servicePort: 12000
+  topologyUpdater: false
   workerConfig:
     configData: |
       core:
         sleepInterval: 60s
       sources:
-        cpu:
-          cpuid:
-            attributeBlacklist:
-              - "BMI1"
-              - "BMI2"
-              - "CLMUL"
-              - "CMOV"
-              - "CX16"
-              - "ERMS"
-              - "F16C"
-              - "HTT"
-              - "LZCNT"
-              - "MMX"
-              - "MMXEXT"
-              - "NX"
-              - "POPCNT"
-              - "RDRAND"
-              - "RDSEED"
-              - "RDTSCP"
-              - "SGX"
-              - "SSE"
-              - "SSE2"
-              - "SSE3"
-              - "SSE4.1"
-              - "SSE4.2"
-              - "SSSE3"
-            attributeWhitelist:
-        kernel:
-          kconfigFile: "/path/to/kconfig"
-          configOpts:
-            - "NO_HZ"
-            - "X86"
-            - "DMI"
         pci:
           deviceClassWhitelist:
             - "0200"
             - "03"
             - "12"
           deviceLabelFields:
-            - "class"
-  customConfig:
-    configData: |
-          - name: "more.kernel.features"
-            matchOn:
-            - loadedKMod: ["example_kmod3"]
+            - "vendor"
 ```
 
 > [!IMPORTANT]

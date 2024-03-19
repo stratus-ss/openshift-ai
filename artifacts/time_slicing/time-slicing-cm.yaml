@@ -1,0 +1,13 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: time-slicing-config
+  namespace: nvidia-gpu-operator
+data:
+  <GPU MODEL NUMBER>: |-
+    version: v1
+    sharing:
+      timeSlicing:
+        resources:
+        - name: nvidia.com/gpu
+          replicas: 4
