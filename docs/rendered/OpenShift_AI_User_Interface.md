@@ -1,5 +1,11 @@
-- [Installing The OpenShift AI Operator](#installing-the-openshift-pipeline-operator)
-- [Installing The OpenShift Pipeline Operator](#installing-the-openshift-pipeline-operator)
+- [Installing The Operators](#installing-the-operators)
+  - [Installing The OpenShift Pipeline Operator](#installing-the-openshift-pipeline-operator)
+  - [Installing The OpenShift AI Operator](#installing-the-openshift-ai-operator)
+  - [Installing The NVIDIA GPU Operator](#installing-the-nvidia-gpu-operator)
+    - [Node Feature Discovery](#node-feature-discovery)
+    - [NVIDIA Operator](#nvidia-operator)
+    - [NVIDIA Cluster Monitoring](#nvidia-cluster-monitoring)
+  - [NVIDIA - Configuring Time Slicing]()
 - [Workbench Basics](#workbench-basics)
   - [Setting Up A Workbench](#setting-up-a-workbench)
   - [Rolebindings](#rolebindings)
@@ -11,13 +17,151 @@
   - [Creating A Pipeline Server](#creating-a-pipeline-server)
     - [Pipeline Servers](#pipeline-servers)
 
-# Installing The OpenShift AI Operator
+# Installing The Operators
+
+OpenShift AI has a single operator for the base installation. However, it is strongly recommended to install the OpenShift Pipelines operator as well to facilitate pipelines in the Data Science workflow. To that end, the below instructions will help walk you through the installation of the operators. In the [artifacts](../../artifacts) directory of this repository, there are example YAMLs that can be used to install the operators.
+
+## Installing The OpenShift Pipeline Operator
+
+In contrast to the OpenShift AI Operator, the Pipeline Operator only requires an appropriate subscription to become active on the cluster.
+
+Navigate to **Operators --> OperatorHub** on the left hand menu in the OpenShift UI and search for OpenShift Pipelines and select the appropriate option:
+![pipelineoperator1](../images/ai_pipelines_operator1.png)
+
+The next screen is informational with no options to select. Click **Install**:
+
+![pipelineoperator2](../images/ai_pipelines_operator2.png)
+
+The defaults on the Operator page can be used safely. If you know you need a specific version of the Pipeline Operator, select the appropriate Update Channel and then click install and wait for the operator installation to complete.
+
+![pipelineoperator3](../images/ai_pipelines_operator3.png)
+
+## Installing The OpenShift AI Operator
 
 ##blank
 
-# Installing The OpenShift Pipeline Operator
+## Installing The NVIDIA GPU Operator
 
-##blank
+### Node Feature Discovery
+
+The Node Feature Discovery (NFD) Operator is a prerequisite for the NVIDIA GPU Operator.
+
+On the left hand menu, navigate to **Operators --> OperatorHub** and then search of the Node Feature Discovery Operator:
+
+![nfd1](../images/ai_node_feature_discovery1.png)
+
+The next screen is purely informational, explaining a bit about the operator itself. There are no options on this page, so after you are done reading you can click the **Install** button:
+
+![nfd2](../images/ai_node_feature_discovery2.png)
+
+Red Hat *strongly* recommends installing the NFD Operator to `openshift-nfd`. Make sure you select **A Specific Namespace On The Cluster Option**. The option to use `openshift-nfd` should be selected for you if the specific namespace option is selected:
+
+![nfd3](../images/ai_node_feature_discovery3.png)
+
+After the operator is installed, you will need to create a NodeFeatureDiscovery. If you are not prompted to create one, select the NFD Operator by clicking on the left hand menu **Operators --> Installed Operators**. Select the `openshift-nfd` project from the drop down and then select Node Feature Discovery Operator. Along the top there will be a tab for NodeFeatureDiscovery. Click **Create NodeFeatureDiscovery**:
+
+![nfd4](../images/ai_node_feature_discovery4.png)
+
+On the creation screen, the default name for the object is `nfd-instance`. This is the preferred name if it is not auto-populated. For most users, the default options are fine. Advanced users can edit the form, or dive right into the YAML.
+
+![nfd5](../images/ai_node_feature_discovery5.png)
+
+> [!NOTE]
+> If you experience problems with your hardware being detected, it is likely a problem with the NFD Operator configuration. There should be no white or black lists by default. However, if this object is modified incorrectly, it can prevent GPUs from being detected.
+
+To validate that the NFD operator is working correctly, navigate to **Compute --> Nodes** and then select a node you know has a GPU in it. With the node selected, go to the details tab.
+
+![nfd6](../images/ai_node_feature_discovery6.png)
+
+Look for the label `nvidia.com/gpu.present=` in order to find out if the GPU has been detected.
+
+![nfd7](../images/ai_node_feature_discovery7.png)
+
+### NVIDIA Operator
+
+After installing the NFD Operator, you can move forward with installing the NVIDIA GPU operator.
+
+On the left hand menu, navigate to **Operators --> OperatorHub** and then search of the NVIDIA GPU Operator:
+
+![nv_operator1](../images/ai_nvidia_operator1.png)
+
+The next screen is purely informational, explaining a bit about the operator itself. There are no options on this page, so after you are done reading you can click the **Install** button:
+
+![nv_operator2](../images/ai_nvidia_operator2.png)
+
+NVIDIA currently recommends having a **Manual** installPlan Approval for the subscriptions. By default the **Automatic** option is selected.
+
+You can pick the update channel based on the needs in your cluster.
+
+Finally, by default, the operator will be installed into the `nvidia-gpu-operator` namespace. If the namespace is not present, it will be created for you during this process:
+
+![nv_operator3](../images/ai_nvidia_operator3.png)
+
+> [!IMPORTANT]
+> While it is possible to use a different namespace, namespace monitoring will *not* be enabled by default. You can enable monitoring with the following:
+> `oc label ns/$NAMESPACE_NAME openshift.io/cluster-monitoring=true`
+
+If you have chosen the manual approval process, you will need to approve the installation before continuing:
+
+![nv_operator4](../images/ai_nvidia_operator4.png)
+
+After the NVIDIA GPU Operator has been successfully installed, you will need to create a ClusterPolicy. This policy includes things like NVIDIA license information (if required), which options are enabled, what repos are used etc.
+
+![nv_operator5](../images/ai_nvidia_operator5.png)
+
+It is safe to take the defaults on the policy screen. [NVIDIA's Documentation](https://docs.nvidia.com/datacenter/cloud-native/openshift/23.9.2/install-gpu-ocp.html#create-the-cluster-policy-using-the-web-console) indicate that the defaults are sufficient for the vast majority of usecases. More advanced users are welcome to explore the options laid out in either the **Form View** or the **YAML View** before creating the policy.
+
+![nv_operator6](../images/ai_nvidia_operator6.png)
+
+After some time you can navigate to **Workloads --> Pods** on the left hand menu. Ensure that the `nvidia-gpu-operator` project is selected from the drop down. You should see 20 or more pods running in the cluster as seen below:
+
+![nv_operator7](../images/ai_nvidia_operator7.png)
+
+### NVIDIA Cluster Monitoring
+
+The GPU Operator generates GPU performance metrics (DCGM-export), status metrics (node-status-exporter) and node-status alerts. For OpenShift Prometheus to collect these metrics, the namespace hosting the GPU Operator must have the label `openshift.io/cluster-monitoring=true`.
+
+By default, monitoring will be enabled on the `nvidia-gpu-operator` namespace. This is the default namespace that is recommended to install the NVIDIA objects into.
+
+> [!NOTE]
+> If you are using a non-default project name you need to run
+>
+> ```
+> oc label ns/$NAMESPACE openshift.io/cluster-monitoring=true
+> ```
+>
+> in order to enable cluster monitoring.
+
+#### Enabling Monitoring Dashboard
+
+To enable the monitoring dashboard in the OpenShift UI, you first need to get the appropriate object definition. The JSON file is too large to be included directly in the body of this text. However, it can be found in the `artifacts/NVIDIA_Operator` directory. This is provided for convenience and NVIDIA may choose to update this file. Always grab the latest version of this file when in doubt:
+
+```
+curl -LfO https://github.com/NVIDIA/dcgm-exporter/raw/main/grafana/dcgm-exporter-dashboard.json
+```
+
+After downloading the file, you need to create a configmap from the file:
+
+```
+oc create configmap nvidia-dcgm-exporter-dashboard -n openshift-config-managed --from-file=dcgm-exporter-dashboard.json
+```
+
+> [!IMPORTANT]
+> The dashboard is not exposted via ANY view in the OpenShift UI by default. You can choose to enable this view in both the Administrator and Developer OpenShift Views if you so choose.
+
+To enable the dashboard in the Administrator view in the OpenShift Web UI run the following:
+
+```
+oc label configmap nvidia-dcgm-exporter-dashboard -n openshift-config-managed "console.openshift.io/dashboard=true"
+```
+
+To enable the dashboard for the developer view as well run the following command:
+
+```
+oc label configmap nvidia-dcgm-exporter-dashboard -n openshift-config-managed "console.openshift.io/odc-dashboard=true"
+```
+
+## 
 
 # Workbench Basics
 
@@ -99,7 +243,7 @@ In the OpenShift AI UI you can adjust the PVC settings by navigating to Settings
 
 Update the PVC to the desired size, scroll all the way to the bottom and click Save.
 
-> ![IMPORTANT]
+> [!IMPORTANT]
 > This change causes several pods to restart and may cause disruption to active processes. This should only be done when disruption can be tolerated.
 
 ## Dealing With Idle Notebooks

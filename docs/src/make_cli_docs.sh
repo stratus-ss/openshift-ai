@@ -1,13 +1,13 @@
 mkdir -p tmp
 echo "
 - [Installing The Operators](rhoai_installing_operators.md)
+    - [Installing The OpenShift Pipeline Operator](rhoai_openshift_pipeline_operator_cli.md)
     - [Installing The OpenShift AI Operator](rhoai_openshiftai_operator_cli.md)
     - [Installing The NVIDIA GPU Operator](blank.md)
         - [Node Feature Discovery](nvidia_node_discovery_operator_cli.md)
         - [NVIDIA Operator](nvidia_operator_cli.md)
         - [NVIDIA Cluster Monitoring](nvidia_cluster_monitoring_cli.md)
     - [NVIDIA - Configuring Time Slicing](nvidia_time_slicing_cli.md)
-    - [Installing The OpenShift Pipeline Operator](rhoai_openshiftai_operator_cli.md)
 - [Workbench Basics](rhoai_workbench_generic.md)
     - [Setting Up A Workbench](rhoai_workbench_cli.md)
     - [Rolebindings](rhoai_rbac_generic.md)
