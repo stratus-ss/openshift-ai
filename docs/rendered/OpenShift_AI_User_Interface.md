@@ -26,6 +26,7 @@ OpenShift AI has a single operator for the base installation. However, it is str
 In contrast to the OpenShift AI Operator, the Pipeline Operator only requires an appropriate subscription to become active on the cluster.
 
 Navigate to **Operators --> OperatorHub** on the left hand menu in the OpenShift UI and search for OpenShift Pipelines and select the appropriate option:
+
 ![pipelineoperator1](../images/ai_pipelines_operator1.png)
 
 The next screen is informational with no options to select. Click **Install**:
