@@ -503,7 +503,7 @@ metadata:
   name: time-slicing-config
   namespace: nvidia-gpu-operator
 data:
-  Tesla-V100-SXM22: |-
+  Tesla-V100-SXM2: |-
     version: v1
     sharing:
       timeSlicing:
