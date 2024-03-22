@@ -534,7 +534,7 @@ oc patch clusterpolicy gpu-cluster-policy     -n nvidia-gpu-operator --type merg
 ```
 
 > [!NOTE]
-> The `oc patch` command above denotes a default `devicePlugin` config. This will apply the configuration, in this case time slicing, to all nodes which have a `tesla-v100-sxm2` installed. Working in combination with the NFD, this will apply time slicing instead of having to label nodes individually. If you wish to follow omit the default, simply remove `"default":tesla-v100-sxm2"` from the patch command.
+> The `oc patch` command above denotes a default `devicePlugin` config. This will apply the configuration, in this case time slicing, to all nodes which have a `tesla-v100-sxm2` installed. Working in combination with the NFD, this will apply time slicing to all nodes with a V100 instead of having to label nodes individually. If you wish to follow omit the default, simply remove `"default":tesla-v100-sxm2"` from the patch command.
 
 #### Labeling Nodes
 
