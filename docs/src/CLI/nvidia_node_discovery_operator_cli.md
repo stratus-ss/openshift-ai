@@ -116,5 +116,5 @@ Check the status by running `oc get pods -n openshift-nfd`. There should be at l
 You can look for the label `nvidia.com/gpu.present=true`. You can run the following command to show any nodes that have the NVIDIA GPU present:
 
 ```
-oc get nodes -l "nvidia.com/gpu.present=true"
+oc get nodes -l "feature.node.kubernetes.io/pci-10de.present=true"
 ```
