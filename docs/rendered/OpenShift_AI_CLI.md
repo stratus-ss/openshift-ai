@@ -524,6 +524,30 @@ You can view the results by opening the OpenShift Web UI and going to **Home -->
 > [!NOTE]
 > If the plugin does not show in the dashboard, this is usually related to the user's browser session. Try using a private browsing option. If this is successful, you can try (from a normal browsing session) logging out, clearing the cache and logging back in.
 
+#### Using NVIDIA SMI
+
+Another option is to use the driver pods to get information from the cards directly. In the `nvidia-gpu-operator` project you can `oc exec` into the driver pod:
+
+```
+oc exec -it $(oc get pod -owide -lopenshift.driver-toolkit=true -o name) -- nvidia-smi
+```
+
+This will get the driver pod name and run the `nvidia-smi` command which will produce output similar to the following:
+
+```
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.54.14              Driver Version: 550.54.14      CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Quadro P6000                   On  |   00000000:05:00.0 Off |                  Off |
+| 26%   25C    P8              9W /  250W |       1MiB /  24576MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+```
+
 ## NVIDIA - Configuring Time Slicing
 
 There are 3 options when it comes to sharing GPU resources amongst several tasks:
