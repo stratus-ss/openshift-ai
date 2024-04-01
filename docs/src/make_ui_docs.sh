@@ -14,6 +14,7 @@ echo "
         - [Workbench RBAC](rhoai_rbac_ui.md)
     - [Default PVC For Notebookes](rhoai_pvc_notebook_generic.md)
         - [Workbench PVC](rhoai_pvc_notebooks_ui.md)
+    - [Custom Notebook Sizes](rhoai_custom_notebook_size_ui.md)
     - [Dealing With Idle Notebooks](rhoai_idle_notebooks_generic.md)
         - [Workbench Idle Notebooks](rhoai_idle_notebooks_ui.md)
     - [Creating A Pipeline Server](rhoai_pipeline_server_generic.md)
@@ -21,7 +22,7 @@ echo "
 " > tmp/summary.md
 
 cd tmp
-for file in rhoai_idle_notebooks_ui.md  rhoai_openshiftai_operator_ui.md  rhoai_openshift_pipeline_operator_ui.md  rhoai_pipeline_server_ui.md  rhoai_pvc_notebooks_ui.md  rhoai_rbac_ui.md  rhoai_workbench_ui.md nvidia_node_discovery_operator_ui.md nvidia_operator_ui.md nvidia_time_slicing_ui.md; do
+for file in rhoai_idle_notebooks_ui.md rhoai_custom_notebook_size_ui.md rhoai_openshiftai_operator_ui.md  rhoai_openshift_pipeline_operator_ui.md  rhoai_pipeline_server_ui.md  rhoai_pvc_notebooks_ui.md  rhoai_rbac_ui.md  rhoai_workbench_ui.md nvidia_node_discovery_operator_ui.md nvidia_operator_ui.md nvidia_time_slicing_ui.md; do
   ln -s ../UI/"${file}"
 done
 

@@ -14,6 +14,7 @@ echo "
         - [Workbench RBAC](rhoai_rbac_cli.md)
     - [Default PVC For Notebookes](rhoai_pvc_notebook_generic.md)
         - [Workbench PVC](rhoai_pvc_notebooks_cli.md)
+    - [Custom Notebook Sizes](rhoai_custom_notebook_size_cli.md)
     - [Dealing With Idle Notebooks](rhoai_idle_notebooks_generic.md)
         - [Workbench Idle Notebooks](rhoai_idle_notebooks_cli.md)
     - [Creating A Pipeline Server](rhoai_pipeline_server_generic.md)
@@ -21,7 +22,7 @@ echo "
 " > tmp/summary.md
 
 cd tmp
-for file in rhoai_idle_notebooks_cli.md  rhoai_openshiftai_operator_cli.md  rhoai_openshift_pipeline_operator_cli.md  rhoai_pipeline_server_cli.md  rhoai_pvc_notebooks_cli.md  rhoai_rbac_cli.md  rhoai_workbench_cli.md nvidia_time_slicing_cli.md nvidia_operator_cli.md nvidia_node_discovery_operator_cli.md nvidia_cluster_monitoring_cli.md; do
+for file in rhoai_idle_notebooks_cli.md rhoai_custom_notebook_size_cli.md rhoai_openshiftai_operator_cli.md  rhoai_openshift_pipeline_operator_cli.md  rhoai_pipeline_server_cli.md  rhoai_pvc_notebooks_cli.md  rhoai_rbac_cli.md  rhoai_workbench_cli.md nvidia_time_slicing_cli.md nvidia_operator_cli.md nvidia_node_discovery_operator_cli.md nvidia_cluster_monitoring_cli.md; do
   ln -s ../CLI/"${file}"
 done
 
